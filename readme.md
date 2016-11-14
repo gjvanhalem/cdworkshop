@@ -16,17 +16,17 @@ Look into the some files of this repository:
 - ./dockerfiles/jenkins/Dockerfile
 - ./dockerfiles/xldeploy/Dockerfile
 - ./dockerfiles/xlrelease/Dockerfile
+- ./dockerfiles/dummy/Dockerfile
 - ./docker-compose.yml
-- ./provision.sh
 
 Open link in your e-mail.
 
 ## Connect
-Connect to your dev instance. 
+Connect to your personal dev instance. 
 
 ```bash
 ssh -i ~/path/to/CDWORKSHOP.pem ec2-user@IPADDRESS
-# And switch to root to be god on the machine
+# Switch to root to be god on the machine
 sudo su -
 ```
 
@@ -67,9 +67,10 @@ git clone https://github.com/martijnvandongen/cdworkshop.git
 git clone https://gist.github.com/martijnvandongen/342jh23kj4h23kj42h credentials
 ```
 
-It looks like:
+Your current working directories look like:
 
 ```
+pwd
 TREE
 ```
 
@@ -78,13 +79,19 @@ TREE
 ```bash
 cd /var/work/cdworkshop
 docker-compose up -d
+#watch some logging and wait until every application is booted
+docker-compose logs
 ```
 
-Now each container can access other containers by the name and the INTERNAL port. For example: XL Release can access XL Deploy via
+Now each container can access other containers by the name and the exposed port. (See table for details)
 
 ## Log in
 
 Try to login to the several applications. Remember your applications are only accessible with the right IP-addresses and everything will be removed after the workshop.
+
+- Public URLs should be accessible through your local webbrowser and **mapped** ports.
+- From the dev machine, actually a docker host, you can access each container on **mapped** ports.
+- Containers can access eachother by container name and the **exposed** ports.
 
 |Application|Public|Docker Host|Container|User|Password|
 |---|---|---|---|---|---|

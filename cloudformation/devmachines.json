@@ -174,7 +174,7 @@
         "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
              "#!/bin/bash -xe\n",
              "yum update -y \n",
-             "yum install -y docker git \n",
+             "yum install -y docker git tree \n",
              "curl -L \"https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)\" > /usr/local/bin/docker-compose \n",
              "chmod +x /usr/local/bin/docker-compose \n",
              "service docker start \n"
