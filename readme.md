@@ -43,6 +43,7 @@ Lets play around with some docker commands. Remember you must be root to use Doc
 
 ```bash
 # try some docker commands
+docker 
 docker ps
 docker status
 docker info
@@ -62,17 +63,22 @@ docker ps
 docker stop 2bcad
 docker rm 2bcad
 docker rmi nginx
+
+# and finally run docker-compose to check out the options
+docker-compose 
 ```
 
 ## Checkout git
 
 ```bash
 mkdir /var/work
+cd /var/work
 git clone https://github.com/martijnvandongen/cdworkshop.git
 
-# before exec next command, get url from e-mail
-# make sure the credentials name remains
-git clone https://gist.github.com/martijnvandongen/342jh23kj4h23kj42h credentials
+# before exec next command, get url from e-mail replace the 1234abcd24234
+# make sure the last word "credentials" name remains (target folder)
+cd /var/work
+git clone https://gist.github.com/martijnvandongen/1234abcd24234 credentials
 ```
 
 Your current working directories look like:
@@ -87,7 +93,7 @@ TREE
 ```bash
 cd /var/work/cdworkshop
 docker-compose up -d
-#watch some logging and wait until every application is booted
+#watch logging and wait until every application is booted
 docker-compose logs
 ```
 
@@ -189,6 +195,15 @@ vi index.html
 git add .
 git commit -am "some comment for your commit"
 git push
+```
+
+### Cleanup
+
+In case you run locally with docker, you should clean up:
+
+```
+cd /var/work/cdworkshop
+docker-compose down
 ```
 
 ## Automatic Configuration
