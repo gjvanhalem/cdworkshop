@@ -19,6 +19,14 @@ Look into the some files of this repository:
 - ./dockerfiles/dummy/Dockerfile
 - ./docker-compose.yml
 
+```
+  gitlab:
+    build: dockerfiles/gitlab/.   <- location of the Dockerfile
+    container_name: gitlab        <- name of the container to access the service
+    ports:
+      - "8090:80"                 <- docker_host_mapped_port:container_exposed_port
+```
+
 Open link in your e-mail.
 
 ## Connect
