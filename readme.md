@@ -80,17 +80,19 @@ cd /var/work/cdworkshop
 docker-compose up -d
 ```
 
+Now each container can access other containers by the name and the INTERNAL port. For example: XL Release can access XL Deploy via
+
 ## Log in
 
 Try to login to the several applications. Remember your applications are only accessible with the right IP-addresses and everything will be removed after the workshop.
 
-|Application|URL|User|Password|
-|---|---|---|---|---|
-|XL Deploy|http://youripaddress.nip.io:4516|admin|password|
-|XL Release|http://youripaddress.nip.io:5516|admin|password|
-|Jenkins|http://youripaddress.nip.io:8080|N/A|N/A|
-|Gitlab|http://youripaddress.nip.io:8090|root|password|
-|Target|http://youripaddress.nip.io|N/A|N/A|
+|Application|Public|Docker Host|Container|User|Password|
+|---|---|---|---|---|---|
+|XL Deploy|http://youripaddress.nip.io:4516|http://localhost:4516|http://xldeploy:4516|admin|password|
+|XL Release|http://youripaddress.nip.io:5516|http://localhost:5516|http://xldeploy:5516|admin|password|
+|Jenkins|http://youripaddress.nip.io:8080|http://localhost:8080|http://jenkins:8080|N/A|N/A|
+|Gitlab|http://youripaddress.nip.io:8090|http://localhost:8090|http://gitlab|root|password|
+|Target|http://youripaddress.nip.io|http://localhost:80|http://dummy|N/A|N/A|
 
 ## Manual Configuration
 In this part we'll configure Gitlab, Jenkins, XL Deploy and XL Release manually. If you want to skip this part, go to the next chapter where (almost) everything is configured automatically. 
