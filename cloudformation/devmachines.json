@@ -213,6 +213,12 @@
         },
         {
           "IpProtocol" : "tcp",
+          "FromPort" : "8090",
+          "ToPort" : "8090",
+          "CidrIp" : { "Ref" : "SSHLocation"}
+        },
+        {
+          "IpProtocol" : "tcp",
           "FromPort" : "80",
           "ToPort" : "80",
           "CidrIp" : { "Ref" : "SSHLocation"}
