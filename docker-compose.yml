@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+
+  gitlab:
+    build: dockerfiles/gitlab/.
+    container_name: gitlab
+    ports:
+      - "8090:80"
+
+  jenkins:
+    build: dockerfiles/jenkins/.
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+
+  xld:
+    build: dockerfiles/xldeploy/.
+    container_name: xldeploy
+    ports:
+      - "4516:4516"
+    environment:
+      - GIT_ENDPOINT=http://gitlab:8090/root/demo
+    volumes:
+      - "${HOME}/credentials/deployit-license.txt:/lib/xl-deploy-server/conf/deployit-license.lic"
+
+  xlr:
+    build: dockerfiles/xlrelease/.
+    container_name: xlrelease
+    ports:
+      - "5516:5516"
+    environment:
+      - GIT_ENDPOINT=http://gitlab:8090/root/demo
+    volumes:
+      - "${HOME}/credentials/xl-release-license.txt:/lib/xl-release-server/conf/xl-release-license.lic"
