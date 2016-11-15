@@ -32,9 +32,28 @@ Open link in your e-mail.
 ## Connect
 Connect to your personal dev instance. 
 
+**Windows**
+
+If you have a Windows machine ensure [Putty and Puttygen](http://www.chiark.greenend.org.uk/~sgtatham/putty/) are installed and use this [procedure](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html) to convert the pem file to a ppk file.
+
+1. Start Puttygen, import pem file, save private key file
+2. Start Putty
+3. Enter Host Name (or IP address): ec2-user@IPADDRESS
+4. Connection > SSH > Auth > Private key file.. Browse to file and select *.ppk file.
+5. [Open]
+
+**Linux**
+
+Save the pem file received and update the IPADDRESS.
+
 ```bash
 ssh -i ~/path/to/CDWORKSHOP.pem ec2-user@IPADDRESS
-# Switch to root to be god on the machine
+```
+**Linux & Windows**
+
+Switch to root to be god on the machine, in order to use Docker which is installed as root as well.
+
+```bash
 sudo su -
 ```
 
@@ -84,8 +103,40 @@ git clone https://gist.github.com/martijnvandongen/1234abcd24234 credentials
 Your current working directories look like:
 
 ```
-pwd
-TREE
+[root@ip-172-31-1-116 work]# pwd
+/var/work
+[root@ip-172-31-1-116 work]# tree
+.
+├── cdworkshop
+│   ├── cloudformation
+│   │   └── devmachines.json
+│   ├── docker-compose.yml
+│   ├── dockerfiles
+│   │   ├── dummy
+│   │   │   ├── Dockerfile
+│   │   │   ├── index.html
+│   │   │   └── start.sh
+│   │   ├── gitlab
+│   │   │   ├── Dockerfile
+│   │   │   └── gitlab.rb
+│   │   ├── jenkins
+│   │   │   └── Dockerfile
+│   │   ├── xldeploy
+│   │   │   ├── Dockerfile
+│   │   │   └── xldeploy.answers
+│   │   └── xlrelease
+│   │       ├── Dockerfile
+│   │       └── xlrelease.answers
+│   ├── readme.md
+│   └── scripts
+│       ├── provision.sh
+│       ├── xlrelease.json
+│       └── xlreleasesed.json
+└── credentials
+    ├── xldeploy.txt
+    └── xlrelease.txt
+
+10 directories, 28 files
 ```
 
 ## Boot applications
@@ -123,12 +174,13 @@ In this part we'll configure Gitlab, Jenkins, XL Deploy and XL Release manually.
 Lets first start with a repo and add our example website to it.
 
 1. Login to Gitlab
-2. Create a new project "website" public
+2. Create a new project with project name "website" public
 3. ```cd /var/work```
 4. ```git clone http://localhost:8090/root/website.git```
 5. ```cd website```
 5. ```cp /var/work/cdworkshop/dockerfiles/dummy/index.html .```
 6. ```git add . && git commit -am "auto" && git push ```
+7. Authenticate with ```root``` and ```password```
 7. Verify through the web interface
 
 ### Create Jenkins jobs
@@ -140,17 +192,16 @@ Now create a Jenkins job which gets the source from gitlab, creates a package an
 2. Create new jobs (Name: buildwebsite, type: Freestyle Project)
 4. Enable Source Code Management: Git
 5. Repository URL: http://gitlab/root/website.git
-6. Credentials add: root / password
-7. Remove Branches to build (all branches)
 7. Skip Build Steps
 7. Add Post-build Action: Deploy with XL Deploy
 8. Select Global server credential
 9. Application: Applications/website
 10. Version: $BUILD_NUMBER
-11. Check Package application
+11. Check Package application > Add artifact
 12. Deployable Type: file.File, Name: index.html, Location: index.html
-13. Property targetPath=/var/www/html
+13. Add property: targetPath=/var/www/html
 14. Check Publish package to XL Deploy, Generated
+15. [SAVE]
 
 ### Configure XL Deploy
 
@@ -159,10 +210,10 @@ Now configure XL Deploy, create the whole infrastructure.
 1. Create Applications/website (Application)
 2. Create Applications/website/examplepackage (Deployment Package)
 3. Create Applications/website/examplepackage/index.html (Type: file.File Target Path: /var/www/html)
-2. Create Infrastructure/target (see table below)
-3. Check Connection
-3. Create Environments/target, select the infrastructure component
-4. Test a deployment manually
+4. Create Infrastructure/target (see table below)
+5. [Check Connection]
+6. Create Environments/target, select the infrastructure component
+7. Test a deployment manually
 
 |Key|Value|
 |---|---|
@@ -176,14 +227,15 @@ Now configure XL Deploy, create the whole infrastructure.
 ### Configure XL Release
 
 1. Add XL Deploy Server to XL Release
+2. Add XL Deploy: http://xldeploy:4516
 2. Add Git Repository: http://gitlab/root/website.git
 3. Add Jenkins: http://jenkins:8080
 4. Create New Template
-5. Add ${version} variable
-5. Add Jenkins Build step (build number: ${version})
+5. Add ${version} variable (uncheck both boxes, other fields default)
+5. Add Jenkins Build step (job name: buildwebsite, build number: ${version})
 6. Add XL Deploy Step (package: website/${version}, Environment: target)
 7. Add Trigger Git:Poll
-8. Title: Git Commit, Release Title: Automated Release ${commitId}, Enabled: True. Just select repository.
+8. Title: Git Commit, Release Title: Automated Release ${commitId}, Enabled: True. 
 
 ### Commit & Watch
 When change something in the source code, xl release is triggered. Keep all Windows open and see/show what happens.
@@ -195,6 +247,7 @@ vi index.html
 git add .
 git commit -am "some comment for your commit"
 git push
+# enter credentials root / password
 ```
 
 ### Cleanup
@@ -224,7 +277,7 @@ This is just for the instructor to setup the platform and send an e-mail with so
 3. Add some source ip addresses to the security group
 4. Add users-and-ipaddresses.txt
 4. Create a gist.github.com repo secret
-5. ```git clone ```
+5. ```git clone gitrepo credentials```
 6. Copy resource files in folder
 7. ```git add . && git commit -am "auto" && git push```
 8. Send e-mail:
@@ -232,5 +285,6 @@ This is just for the instructor to setup the platform and send an e-mail with so
 ```
 pem file
 link to https://github.com/martijnvandongen/cdworkshop
-link to gist url
+link to gist http url
+list with names and public IP addresses
 ```
