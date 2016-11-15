@@ -34,13 +34,15 @@ Connect to your personal dev instance.
 
 **Windows**
 
-If you have a Windows machine ensure [Putty and Puttygen](http://www.chiark.greenend.org.uk/~sgtatham/putty/) are installed and use this [procedure](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html) to convert the pem file to a ppk file.
+If you have a Windows machine ensure [Putty and Puttygen](http://www.chiark.greenend.org.uk/~sgtatham/putty/) are installed and use this [procedure](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html) to convert the pem file to a ppk file. In case you received a ppk file from the instructor, start at 2.
 
 1. Start Puttygen, import pem file, save private key file
 2. Start Putty
 3. Enter Host Name (or IP address): ec2-user@IPADDRESS
 4. Connection > SSH > Auth > Private key file.. Browse to file and select *.ppk file.
 5. [Open]
+6. Accept the host
+7. ```sudo su -```
 
 **Linux**
 
@@ -48,12 +50,6 @@ Save the pem file received and update the IPADDRESS.
 
 ```bash
 ssh -i ~/path/to/CDWORKSHOP.pem ec2-user@IPADDRESS
-```
-**Linux & Windows**
-
-Switch to root to be god on the machine, in order to use Docker which is installed as root as well.
-
-```bash
 sudo su -
 ```
 
