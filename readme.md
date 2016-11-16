@@ -246,6 +246,16 @@ git push
 # enter credentials root / password
 ```
 
+### Bonus: testing
+
+If we have time left, add a task to XL Release template with JSON Webhook to verify the website we are deploying at: http://IPADDRESS/test.json.
+
+Add this file to the build definition in Jenkins.
+Add the file in the GIT repo with the expected json.
+If the test failed, make it right. If the test succeeded, brake it.
+
+Normally in a later stage of the CD process, this simple test will be replaced for more complex tasks and tools.
+
 ### Cleanup
 
 In case you run locally with docker, you should clean up:
