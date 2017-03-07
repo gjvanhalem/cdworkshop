@@ -21,7 +21,7 @@ services:
     ports:
       - "4516:4516"
     volumes:
-      - "/var/work/credentials/xldeploy.txt:/lib/xl-deploy-server/conf/deployit-license.lic"
+      - "/var/work/cdworkshop/credentials/xldeploy.txt:/lib/xl-deploy-server/conf/deployit-license.lic"
 
   xlr:
     build: dockerfiles/xlrelease/.
@@ -29,7 +29,7 @@ services:
     ports:
       - "5516:5516"
     volumes:
-      - "/var/work/credentials/xlrelease.txt:/lib/xl-release-server/conf/xl-release-license.lic"
+      - "/var/work/cdworkshop/credentials/xlrelease.txt:/lib/xl-release-server/conf/xl-release-license.lic"
   
   dummy:
     build: dockerfiles/dummy/.
