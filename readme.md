@@ -88,12 +88,7 @@ docker-compose
 ```bash
 mkdir /var/work
 cd /var/work
-git clone https://github.com/martijnvandongen/cdworkshop.git
-
-# before exec next command, get url from e-mail replace the 1234abcd24234
-# make sure the last word "credentials" name remains (target folder)
-cd /var/work
-git clone https://gist.github.com/martijnvandongen/1234abcd24234 credentials
+git clone https://github.com/gjvanhalem/cdworkshop.git
 ```
 
 Your current working directories look like:
@@ -103,36 +98,35 @@ Your current working directories look like:
 /var/work
 [root@ip-172-31-1-116 work]# tree
 .
-├── cdworkshop
-│   ├── cloudformation
-│   │   └── devmachines.json
-│   ├── docker-compose.yml
-│   ├── dockerfiles
-│   │   ├── dummy
-│   │   │   ├── Dockerfile
-│   │   │   ├── index.html
-│   │   │   └── start.sh
-│   │   ├── gitlab
-│   │   │   ├── Dockerfile
-│   │   │   └── gitlab.rb
-│   │   ├── jenkins
-│   │   │   └── Dockerfile
-│   │   ├── xldeploy
-│   │   │   ├── Dockerfile
-│   │   │   └── xldeploy.answers
-│   │   └── xlrelease
-│   │       ├── Dockerfile
-│   │       └── xlrelease.answers
-│   ├── readme.md
-│   └── scripts
-│       ├── provision.sh
-│       ├── xlrelease.json
-│       └── xlreleasesed.json
-└── credentials
-    ├── xldeploy.txt
-    └── xlrelease.txt
+└── cdworkshop
+    ├── cloudformation
+    │   └── devmachines.json
+    ├── docker-compose.yml
+    ├── dockerfiles
+    │   ├── dummy
+    │   │   ├── Dockerfile
+    │   │   ├── index.html
+    │   │   └── start.sh
+    │   ├── gitlab
+    │   │   ├── Dockerfile
+    │   │   └── gitlab.rb
+    │   ├── jenkins
+    │   │   └── Dockerfile
+    │   ├── xldeploy
+    │   │   ├── Dockerfile
+    │   │   └── xldeploy.answers
+    │   ├── xlrelease
+    │   │   ├── Dockerfile
+    │   │   └── xlrelease.answers
+    │   └── credentials
+    │       ├── xldeploy.txt
+    │       └── xlrelease.txt
+    ├── readme.md
+    └── scripts
+        ├── provision.sh
+        ├── xlrelease.json
+        └── xlreleasesed.json
 
-10 directories, 28 files
 ```
 
 ## Boot applications
@@ -278,19 +272,20 @@ TODO
 ## Setup Dev Platform (instructor)
 This is just for the instructor to setup the platform and send an e-mail with some web links and the pem file to connect.
 
+The week before the workshop
+1. Request a trial license for XL Deploy and XL Release at www.xebialabs.com
+2. Save the zip files of XLR and XLD to a public location
+3. change dockerfiles/xldeploy/Dockerfile and dockerfiles/xlrelease/Dockerfile to reflect the right download URL
+4. Paste the licenses for XLD and XLR in credentials/xldeploy.txt and credentials/xlrelease.txt
+
+Setup the AWS environment
 1. Create a key pair
 2. Upload and execute ./cloudformation/devinstances.json
 3. Add some source ip addresses to the security group
-4. Add users-and-ipaddresses.txt
-4. Create a gist.github.com repo secret
-5. ```git clone gitrepo credentials```
-6. Copy resource files in folder
-7. ```git add . && git commit -am "auto" && git push```
 8. Send e-mail:
 
 ```
 pem file
 link to https://github.com/martijnvandongen/cdworkshop
-link to gist http url
 list with names and public IP addresses
 ```

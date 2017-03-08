@@ -8,7 +8,7 @@ ENV root /lib
 ENV home ${root}/xl-deploy-server
 
 RUN wget -q \
-      https://s3-us-west-2.amazonaws.com/xlstuff/XL-Deploy-5.1.4-server.zip \
+      <<DOWNLOAD LOCATION FOR XLDEPLOY>> \
       -O /tmp/xld.zip \
   && unzip \
       /tmp/xld.zip \

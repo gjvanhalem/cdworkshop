@@ -8,7 +8,7 @@ ENV root /lib
 ENV home ${root}/xl-release-server
 
 RUN wget -q \
-      https://s3-us-west-2.amazonaws.com/xlstuff/XL-Release-6.1.0-server.zip \
+      <<DOWNLOAD LOCATION FOR XLRELEASE>> \
       -O /tmp/xlr-server.zip \
     && unzip \
       /tmp/xlr-server.zip \
