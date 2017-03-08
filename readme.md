@@ -272,13 +272,15 @@ TODO
 ## Setup Dev Platform (instructor)
 This is just for the instructor to setup the platform and send an e-mail with some web links and the pem file to connect.
 
-The week before the workshop
+###The week before the workshop
+
 1. Request a trial license for XL Deploy and XL Release at www.xebialabs.com
 2. Save the zip files of XLR and XLD to a public location
 3. change dockerfiles/xldeploy/Dockerfile and dockerfiles/xlrelease/Dockerfile to reflect the right download URL
 4. Paste the licenses for XLD and XLR in credentials/xldeploy.txt and credentials/xlrelease.txt
 
-Setup the AWS environment
+###Setup the AWS environment
+
 1. Create a key pair
 2. Upload and execute ./cloudformation/devinstances.json
 3. Add some source ip addresses to the security group
