@@ -3,12 +3,12 @@ FROM java:8-jre-alpine
 RUN apk add --no-cache curl openssl jq
 
 # https://dist.xebialabs.com/xl-release-trial.zip
-ENV version 6.1.0
+ENV version 7.0.1
 ENV root /lib
 ENV home ${root}/xl-release-server
 
 RUN wget -q \
-      <<DOWNLOAD LOCATION FOR XLRELEASE>> \
+      http://maven.rabobank.nl/nexus/service/local/repositories/ci-devops-support-release/content/com/xebialabs/XL-Release/7.0.1/XL-Release-7.0.1-server.zip \
       -O /tmp/xlr-server.zip \
     && unzip \
       /tmp/xlr-server.zip \
@@ -21,6 +21,7 @@ RUN wget -q \
       ${home}/serviceWrapper
 
 ADD xlrelease.answers ${home}/bin/xlrelease.answers
+ADD xlrelease.txt ${home}/conf/xl-release-license.lic
 
 WORKDIR ${home}/bin
 
